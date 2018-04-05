@@ -19,21 +19,24 @@
 	var app = {
 		init: function() {
 			// Load list
-			app.storage('get');
+			app.populate();
 
 			// Add task
-			document.querySelector('.app-insert input').addEventListener('keyup', function(e) {
+			document.querySelector('.app-insert input#tarefa').addEventListener('keyup', function(e) {
 				if ( e.which === 13 && this.value !== '' ) {
-					app.addTask(this.value);
-					app.storage('update');
+					var $date = document.querySelector('#data');
+					item = {descricao:this.value,dataLimite:$date.value,feito:false};
+					app.addTask(item);
 					this.value = '';
+					$date.value = '';
 				}
 			}, false);
 
 			document.querySelector('.app-list').addEventListener('click', function(e) {
 				// Remove task
 				if ( e.target.classList.contains('remove-task') ) {
-					app.removeTask(e.target.parentNode);
+					console.log(e.target.parentNode)
+					app.removeTask(e.target);
 
 				// Complete Task
 				} else if ( e.target.classList.contains('task') ) {
@@ -41,51 +44,86 @@
 				}
 			}, false);
 		},
-		addTask: function (task) {
-			var new_task = document.createElement('li');
-				new_task.setAttribute('class', 'task');
-				new_task.innerHTML = task + '<a href="javascript:;" class="remove-task">remove</a>';
-				
-			var $list = document.querySelector('.app-list ul');
-				$list.appendChild(new_task);
+		addTask: function (tarefa) {
+			$.ajax({
+				url: "http://localhost:8080/tarefa",
+				crossDomain: true,
+				data: JSON.stringify(tarefa),
+				dataType: 'json',
+				success: function(item) {
+					//console.log(item);
+					//app.createItem(item);
+					app.populate();
+				},
+				type: 'POST',
+				contentType:"application/json"
+			});
 		},
 		removeTask: function (task) {
 			task.style.opacity = 0;
-			setTimeout(function() {
-				task.remove();
-				app.storage('update');
-			}, 400);
+			$.ajax({
+				url: "http://localhost:8080/tarefa/"+task.id,
+				crossDomain: true,
+				dataType: 'json',
+				success: function(item) {
+					//console.log(item);
+					task.parentNode.remove();
+					app.populate();
+				},
+				type: 'DELETE',
+				contentType:"application/json"
+			});
+			
 		},
 		completeTask: function (task) {
-			task.classList.toggle('task-complete');
-			app.storage('update');
-		},
-		storage: function(type) {
-			if ( type === 'get' ) {
-				if ( localStorage.getItem('simpletodo') !== null ) {
-					document.querySelector('.app-list').innerHTML = localStorage.getItem('simpletodo');
-				}
-				app.populate();
-			} else if ( type === 'update' ) {
-				var str = document.querySelector('.app-list').innerHTML;
-				localStorage.setItem('simpletodo', str);
-			}
+			console.log(task);
+			var elemento = task.getElementsByTagName("a")[0];
+
+			console.log();
+			$.ajax({
+				url: "http://localhost:8080/tarefa/"+elemento.id
+			  }).done(function(tarefa) {
+				tarefa.feito=!tarefa.feito;
+				$.ajax({
+					url: "http://localhost:8080/tarefa",
+					crossDomain: true,
+					data: JSON.stringify(tarefa),
+					dataType: 'json',
+					success: function(item) {
+						task.classList.toggle('task-complete');
+					},
+					method: 'PUT',
+					contentType:"application/json"
+				});
+
+			  });
 		},
 		populate: function(){
+			var $list = document.querySelector('.app-list ul');
+			$list.innerHTML='';
+
 			$.ajax({
 				url: "http://localhost:8080/tarefa"
 			  }).done(function(data) {
-				console.log(data);
+				for (var item in data) {
+					//console.log(data[item]);
+					app.createItem(data[item]);
+				}
+				
 			  });
 
-			/*
-			var new_task = document.createElement('li');
-				new_task.setAttribute('class', 'task');
-				new_task.innerHTML = task + '<a href="javascript:;" class="remove-task">remove</a>';
-				
+		},
+		createItem: function(item){
 			var $list = document.querySelector('.app-list ul');
-				$list.appendChild(new_task);
-			*/
+			var new_task = document.createElement('li');
+			new_task.setAttribute('class', 'task');
+
+			if(item.feito){
+				new_task.classList.toggle('task-complete');
+			}
+			
+			new_task.innerHTML = item.descricao+' - '+item.dataLimite + '<a href="javascript:;" id="'+item.id+'" class="remove-task">remove</a>';
+			$list.appendChild(new_task);
 		}
 	};
 	app.init();

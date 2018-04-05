@@ -15,7 +15,7 @@
   ------------------------------
 */
 (function() {
-
+	var urlBase = "http://todo-service-mario.herokuapp.com";
 	var app = {
 		init: function() {
 			// Load list
@@ -46,7 +46,7 @@
 		},
 		addTask: function (tarefa) {
 			$.ajax({
-				url: "http://localhost:8080/tarefa",
+				url: urlBase+"/tarefa",
 				crossDomain: true,
 				data: JSON.stringify(tarefa),
 				dataType: 'json',
@@ -62,7 +62,7 @@
 		removeTask: function (task) {
 			task.style.opacity = 0;
 			$.ajax({
-				url: "http://localhost:8080/tarefa/"+task.id,
+				url: urlBase+"/tarefa/"+task.id,
 				crossDomain: true,
 				dataType: 'json',
 				success: function(item) {
@@ -81,11 +81,11 @@
 
 			console.log();
 			$.ajax({
-				url: "http://localhost:8080/tarefa/"+elemento.id
+				url: urlBase+"/tarefa/"+elemento.id
 			  }).done(function(tarefa) {
 				tarefa.feito=!tarefa.feito;
 				$.ajax({
-					url: "http://localhost:8080/tarefa",
+					url: urlBase+"/tarefa",
 					crossDomain: true,
 					data: JSON.stringify(tarefa),
 					dataType: 'json',
@@ -103,7 +103,7 @@
 			$list.innerHTML='';
 
 			$.ajax({
-				url: "http://localhost:8080/tarefa"
+				url: urlBase+"/tarefa"
 			  }).done(function(data) {
 				for (var item in data) {
 					//console.log(data[item]);

@@ -15,7 +15,7 @@
   ------------------------------
 */
 (function() {
-	var urlBase = "http://todo-service-mario.herokuapp.com";
+	var urlBase = "https://todo-service-mario.herokuapp.com";
 	var app = {
 		init: function() {
 			// Load list

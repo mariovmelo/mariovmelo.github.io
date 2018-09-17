@@ -19,8 +19,7 @@ var app;
 
 (function() {
 	var urlBase = "https://todo-service-imd.herokuapp.com";
-	//var urlBase = "http://localhost:8080";
-	app = {
+	var app = {
 		init: function() {
 			// Load list
 			app.populate();
@@ -131,5 +130,5 @@ var app;
 		}
 	};
 	app.init();
-	connect();
+
 })();

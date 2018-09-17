@@ -3,20 +3,24 @@
 	
 	Simple To-do
  	Developed by Caue Queiroz
-
- 	Goals: 
+	Adaptado por Mário Melo
+	 
+	Goals: 
  	Create a todo list that can be able to:
  	- Add new tasks
  	- List added tasks
  	- Complete a task
  	- Remove a task
- 	- Store everything on localStorage
+ 	- Store everything on web services
 
   ------------------------------
 */
+var app;
+
 (function() {
-	var urlBase = "https://todo-service-mario.herokuapp.com";
-	var app = {
+	var urlBase = "https://todo-service-imd.herokuapp.com";
+	//var urlBase = "http://localhost:8080";
+	app = {
 		init: function() {
 			// Load list
 			app.populate();
@@ -127,5 +131,5 @@
 		}
 	};
 	app.init();
-
+	connect();
 })();

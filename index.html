@@ -58,4 +58,1026 @@
         }
         
         .search-box {
-            flex
+            flex: 1;
+            min-width: 300px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-box:focus {
+            border-color: #667eea;
+        }
+        
+        .filter-select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            background: white;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            max-height: 80vh;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        th:last-child {
+            border-right: none;
+        }
+        
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        
+        td:last-child {
+            border-right: none;
+        }
+        
+        tr:hover {
+            background-color: #f8f9ff;
+        }
+        
+        .workflow-id {
+            font-weight: bold;
+            color: #667eea;
+            font-family: monospace;
+        }
+        
+        .workflow-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .category-marketing { background: #e3f2fd; color: #1565c0; }
+        .category-crm { background: #f3e5f5; color: #7b1fa2; }
+        .category-communication { background: #e8f5e8; color: #2e7d32; }
+        .category-ecommerce { background: #fff3e0; color: #ef6c00; }
+        .category-ai { background: #fce4ec; color: #c2185b; }
+        .category-productivity { background: #e0f2f1; color: #00695c; }
+        .category-monitoring { background: #fff8e1; color: #f57f17; }
+        .category-data { background: #e1f5fe; color: #0277bd; }
+        
+        .complexity {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .complexity-low { background: #d4edda; color: #155724; }
+        .complexity-medium { background: #fff3cd; color: #856404; }
+        .complexity-high { background: #f8d7da; color: #721c24; }
+        
+        .integrations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        
+        .integration-tag {
+            background: #e8f2ff;
+            color: #2c5aa0;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            border: 1px solid #b8d4f0;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .description {
+            max-width: 300px;
+            line-height: 1.4;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: auto;
+            }
+            
+            .stats {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Tabela Completa de Workflows N8N</h1>
+            <p>Visualização completa de todos os workflows organizados em tabela</p>
+        </div>
+        
+        <div class="controls">
+            <input type="text" class="search-box" placeholder="🔍 Pesquisar por nome, categoria, integração ou descrição..." id="searchInput">
+            
+            <select class="filter-select" id="categoryFilter">
+                <option value="">Todas as Categorias</option>
+                <option value="marketing">Marketing e Vendas</option>
+                <option value="crm">CRM e Dados</option>
+                <option value="communication">Comunicação</option>
+                <option value="ecommerce">E-commerce</option>
+                <option value="ai">Inteligência Artificial</option>
+                <option value="productivity">Produtividade</option>
+                <option value="monitoring">Monitoramento</option>
+                <option value="data">Análise de Dados</option>
+            </select>
+            
+            <select class="filter-select" id="complexityFilter">
+                <option value="">Todas as Complexidades</option>
+                <option value="low">Baixa</option>
+                <option value="medium">Média</option>
+                <option value="high">Alta</option>
+            </select>
+            
+            <div class="stats">
+                <span>Total: <strong id="totalCount">0</strong></span>
+                <span>Visíveis: <strong id="visibleCount">0</strong></span>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="workflowTable">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">ID</th>
+                        <th style="width: 250px;">Nome do Workflow</th>
+                        <th style="width: 120px;">Categoria</th>
+                        <th style="width: 350px;">Descrição</th>
+                        <th style="width: 100px;">Complexidade</th>
+                        <th style="width: 200px;">Integrações</th>
+                        <th style="width: 180px;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="workflowTableBody">
+                    <!-- Marketing e Vendas -->
+                    <tr data-category="marketing" data-complexity="medium">
+                        <td><span class="workflow-id">MKT001</span></td>
+                        <td><div class="workflow-title">LinkedIn Post Interactions to Email Campaign</div></td>
+                        <td><span class="category-badge category-marketing">Marketing</span></td>
+                        <td><div class="description">Automatiza a criação de campanhas de email baseadas em interações de posts do LinkedIn</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">LinkedIn</span>
+                                <span class="integration-tag">Email Marketing</span>
+                                <span class="integration-tag">CRM</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/linkedin-email-automation.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="marketing" data-complexity="high">
+                        <td><span class="workflow-id">MKT002</span></td>
+                        <td><div class="workflow-title">Automated Social Media Content Publishing Factory</div></td>
+                        <td><span class="category-badge category-marketing">Marketing</span></td>
+                        <td><div class="description">Sistema completo de publicação automatizada de conteúdo em redes sociais com composição de prompts</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Facebook</span>
+                                <span class="integration-tag">Twitter</span>
+                                <span class="integration-tag">Instagram</span>
+                                <span class="integration-tag">AI/GPT</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/social-media-automation.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="marketing" data-complexity="medium">
+                        <td><span class="workflow-id">MKT003</span></td>
+                        <td><div class="workflow-title">Stripe Invoice Payment to HubSpot + Slack</div></td>
+                        <td><span class="category-badge category-marketing">Marketing</span></td>
+                        <td><div class="description">Atualiza HubSpot e notifica equipe no Slack quando pagamento de fatura Stripe é processado</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Stripe</span>
+                                <span class="integration-tag">HubSpot</span>
+                                <span class="integration-tag">Slack</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/stripe-hubspot-slack.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="marketing" data-complexity="medium">
+                        <td><span class="workflow-id">MKT004</span></td>
+                        <td><div class="workflow-title">Facebook Lead Ads to Multiple CRMs</div></td>
+                        <td><span class="category-badge category-marketing">Marketing</span></td>
+                        <td><div class="description">Distribui leads do Facebook Ads automaticamente para múltiplos sistemas CRM</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Facebook Ads</span>
+                                <span class="integration-tag">HubSpot</span>
+                                <span class="integration-tag">Salesforce</span>
+                                <span class="integration-tag">Pipedrive</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/facebook-leads-crm.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="marketing" data-complexity="high">
+                        <td><span class="workflow-id">MKT005</span></td>
+                        <td><div class="workflow-title">Advanced Email Marketing Automation</div></td>
+                        <td><span class="category-badge category-marketing">Marketing</span></td>
+                        <td><div class="description">Sistema avançado de automação de email marketing com segmentação dinâmica e A/B testing</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Mailchimp</span>
+                                <span class="integration-tag">SendGrid</span>
+                                <span class="integration-tag">Analytics</span>
+                                <span class="integration-tag">CRM</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/advanced-email-marketing.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- CRM e Dados -->
+                    <tr data-category="crm" data-complexity="medium">
+                        <td><span class="workflow-id">CRM001</span></td>
+                        <td><div class="workflow-title">Airtable Batch Processing</div></td>
+                        <td><span class="category-badge category-crm">CRM</span></td>
+                        <td><div class="description">Processamento em lote de dados do Airtable com sincronização bidirecional</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Airtable</span>
+                                <span class="integration-tag">Webhook</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/airtable-batch-processing.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="crm" data-complexity="low">
+                        <td><span class="workflow-id">CRM002</span></td>
+                        <td><div class="workflow-title">Pipedrive Deal Creation</div></td>
+                        <td><span class="category-badge category-crm">CRM</span></td>
+                        <td><div class="description">Cria automaticamente negócios no Pipedrive baseado em triggers externos</div></td>
+                        <td><span class="complexity complexity-low">Baixa</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Pipedrive</span>
+                                <span class="integration-tag">Webhook</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/pipedrive-deal-creation.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="crm" data-complexity="high">
+                        <td><span class="workflow-id">CRM003</span></td>
+                        <td><div class="workflow-title">Multi-CRM Data Synchronization</div></td>
+                        <td><span class="category-badge category-crm">CRM</span></td>
+                        <td><div class="description">Sincroniza dados entre múltiplos sistemas CRM mantendo consistência</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">HubSpot</span>
+                                <span class="integration-tag">Salesforce</span>
+                                <span class="integration-tag">Pipedrive</span>
+                                <span class="integration-tag">Zoho CRM</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/multi-crm-sync.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="crm" data-complexity="medium">
+                        <td><span class="workflow-id">CRM004</span></td>
+                        <td><div class="workflow-title">Lead Qualification with BatchData</div></td>
+                        <td><span class="category-badge category-crm">CRM</span></td>
+                        <td><div class="description">Sistema de qualificação de leads usando processamento em lote de dados</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">BatchData</span>
+                                <span class="integration-tag">CRM</span>
+                                <span class="integration-tag">Email</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/lead-qualification-batch.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="crm" data-complexity="high">
+                        <td><span class="workflow-id">CRM005</span></td>
+                        <td><div class="workflow-title">Customer Journey Automation</div></td>
+                        <td><span class="category-badge category-crm">CRM</span></td>
+                        <td><div class="description">Automatiza toda a jornada do cliente desde o primeiro contato até pós-venda</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">CRM</span>
+                                <span class="integration-tag">Email</span>
+                                <span class="integration-tag">SMS</span>
+                                <span class="integration-tag">Analytics</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/customer-journey.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Comunicação -->
+                    <tr data-category="communication" data-complexity="low">
+                        <td><span class="workflow-id">COM001</span></td>
+                        <td><div class="workflow-title">New Ticket Alerts to Teams</div></td>
+                        <td><span class="category-badge category-communication">Comunicação</span></td>
+                        <td><div class="description">Envia alertas automáticos para Microsoft Teams quando novos tickets são criados</div></td>
+                        <td><span class="complexity complexity-low">Baixa</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Microsoft Teams</span>
+                                <span class="integration-tag">Ticketing System</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/ticket-alerts-teams.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="communication" data-complexity="medium">
+                        <td><span class="workflow-id">COM002</span></td>
+                        <td><div class="workflow-title">Daily Weather Updates via Line</div></td>
+                        <td><span class="category-badge category-communication">Comunicação</span></td>
+                        <td><div class="description">Envia atualizações diárias do clima através de mensagens no Line</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Line</span>
+                                <span class="integration-tag">Weather API</span>
+                                <span class="integration-tag">Scheduler</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/weather-line-updates.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="communication" data-complexity="low">
+                        <td><span class="workflow-id">COM003</span></td>
+                        <td><div class="workflow-title">Mattermost Webhook Integration</div></td>
+                        <td><span class="category-badge category-communication">Comunicação</span></td>
+                        <td><div class="description">Integração via webhook para receber e processar mensagens do Mattermost</div></td>
+                        <td><span class="complexity complexity-low">Baixa</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Mattermost</span>
+                                <span class="integration-tag">Webhook</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/mattermost-webhook.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="communication" data-complexity="medium">
+                        <td><span class="workflow-id">COM004</span></td>
+                        <td><div class="workflow-title">Multi-Channel Emergency Alerts</div></td>
+                        <td><span class="category-badge category-communication">Comunicação</span></td>
+                        <td><div class="description">Sistema de alertas de emergência que notifica simultaneamente via Slack, Teams, Email e SMS</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Slack</span>
+                                <span class="integration-tag">Microsoft Teams</span>
+                                <span class="integration-tag">Email</span>
+                                <span class="integration-tag">SMS</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/emergency-alerts.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="communication" data-complexity="high">
+                        <td><span class="workflow-id">COM005</span></td>
+                        <td><div class="workflow-title">Intelligent Notification Router</div></td>
+                        <td><span class="category-badge category-communication">Comunicação</span></td>
+                        <td><div class="description">Sistema inteligente que roteia notificações baseado em prioridade, horário e preferências do usuário</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">AI Decision</span>
+                                <span class="integration-tag">Multiple Channels</span>
+                                <span class="integration-tag">User Preferences</span>
+                                <span class="integration-tag">Priority Engine</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/intelligent-notification-router.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- E-commerce -->
+                    <tr data-category="ecommerce" data-complexity="high">
+                        <td><span class="workflow-id">ECM001</span></td>
+                        <td><div class="workflow-title">Shopify to Onfleet Task Creation</div></td>
+                        <td><span class="category-badge category-ecommerce">E-commerce</span></td>
+                        <td><div class="description">Cria automaticamente tarefas no Onfleet quando novos fulfillments são criados no Shopify</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Shopify</span>
+                                <span class="integration-tag">Onfleet</span>
+                                <span class="integration-tag">Logistics</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/shopify-onfleet.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="ecommerce" data-complexity="medium">
+                        <td><span class="workflow-id">ECM002</span></td>
+                        <td><div class="workflow-title">Onfleet Tasks from Spreadsheets</div></td>
+                        <td><span class="category-badge category-ecommerce">E-commerce</span></td>
+                        <td><div class="description">Cria tarefas de entrega no Onfleet baseado em dados de planilhas</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Onfleet</span>
+                                <span class="integration-tag">Google Sheets</span>
+                                <span class="integration-tag">Excel</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/onfleet-spreadsheet.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="ecommerce" data-complexity="medium">
+                        <td><span class="workflow-id">ECM003</span></td>
+                        <td><div class="workflow-title">Gumroad Sale Trigger</div></td>
+                        <td><span class="category-badge category-ecommerce">E-commerce</span></td>
+                        <td><div class="description">Automatiza ações quando vendas são realizadas na plataforma Gumroad</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Gumroad</span>
+                                <span class="integration-tag">Email</span>
+                                <span class="integration-tag">Analytics</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/gumroad-sales.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="ecommerce" data-complexity="high">
+                        <td><span class="workflow-id">ECM004</span></td>
+                        <td><div class="workflow-title">WooCommerce Order Processing Pipeline</div></td>
+                        <td><span class="category-badge category-ecommerce">E-commerce</span></td>
+                        <td><div class="description">Pipeline completo de processamento de pedidos WooCommerce com integração ERP</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">WooCommerce</span>
+                                <span class="integration-tag">ERP System</span>
+                                <span class="integration-tag">Payment Gateway</span>
+                                <span class="integration-tag">Inventory</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/woocommerce-pipeline.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="ecommerce" data-complexity="medium">
+                        <td><span class="workflow-id">ECM005</span></td>
+                        <td><div class="workflow-title">Inventory Management Automation</div></td>
+                        <td><span class="category-badge category-ecommerce">E-commerce</span></td>
+                        <td><div class="description">Automatiza o gerenciamento de estoque com alertas de baixo estoque e reposição automática</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Inventory System</span>
+                                <span class="integration-tag">Suppliers API</span>
+                                <span class="integration-tag">Email Alerts</span>
+                                <span class="integration-tag">ERP</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/inventory-management.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Inteligência Artificial -->
+                    <tr data-category="ai" data-complexity="high">
+                        <td><span class="workflow-id">AI001</span></td>
+                        <td><div class="workflow-title">Multi-Agent Conversation System</div></td>
+                        <td><span class="category-badge category-ai">IA</span></td>
+                        <td><div class="description">Sistema de conversação com múltiplos agentes de IA para diferentes contextos</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">OpenAI</span>
+                                <span class="integration-tag">ChatGPT</span>
+                                <span class="integration-tag">AI Agents</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/multi-agent-ai.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="ai" data-complexity="high">
+                        <td><span class="workflow-id">AI002</span></td>
+                        <td><div class="workflow-title">ChatGPT Image Analysis with Drive and Sheets</div></td>
+                        <td><span class="category-badge category-ai">IA</span></td>
+                        <td><div class="description">Analisa imagens usando ChatGPT e armazena resultados no Google Drive e Sheets</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">ChatGPT</span>
+                                <span class="integration-tag">Google Drive</span>
+                                <span class="integration-tag">Google Sheets</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/chatgpt-image-analysis.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="ai" data-complexity="medium">
+                        <td><span class="workflow-id">AI003</span></td>
+                        <td><div class="workflow-title">OpenAI Model Examples</div></td>
+                        <td><span class="category-badge category-ai">IA</span></td>
+                        <td><div class="description">Exemplos de uso de diferentes modelos da OpenAI para várias aplicações</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">OpenAI</span>
+                                <span class="integration-tag">GPT Models</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/openai-examples.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="ai" data-complexity="high">
+                        <td><span class="workflow-id">AI004</span></td>
+                        <td><div class="workflow-title">AI Content Generation Factory</div></td>
+                        <td><span class="category-badge category-ai">IA</span></td>
+                        <td><div class="description">Sistema automatizado de geração de conteúdo usando múltiplos modelos de IA</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">OpenAI</span>
+                                <span class="integration-tag">Claude</span>
+                                <span class="integration-tag">Gemini</span>
+                                <span class="integration-tag">Content CMS</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/ai-content-factory.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="ai" data-complexity="medium">
+                        <td><span class="workflow-id">AI005</span></td>
+                        <td><div class="workflow-title">AI-Powered Customer Support Bot</div></td>
+                        <td><span class="category-badge category-ai">IA</span></td>
+                        <td><div class="description">Chatbot inteligente para suporte ao cliente com escalação automática para humanos</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">OpenAI</span>
+                                <span class="integration-tag">Chatbot Platform</span>
+                                <span class="integration-tag">Ticketing System</span>
+                                <span class="integration-tag">Knowledge Base</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/ai-support-bot.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Produtividade -->
+                    <tr data-category="productivity" data-complexity="low">
+                        <td><span class="workflow-id">PRD001</span></td>
+                        <td><div class="workflow-title">Todoist Task Creation</div></td>
+                        <td><span class="category-badge category-productivity">Produtividade</span></td>
+                        <td><div class="description">Cria automaticamente tarefas no Todoist baseado em triggers externos</div></td>
+                        <td><span class="complexity complexity-low">Baixa</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Todoist</span>
+                                <span class="integration-tag">Task Management</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/todoist-tasks.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="productivity" data-complexity="medium">
+                        <td><span class="workflow-id">PRD002</span></td>
+                        <td><div class="workflow-title">Google Calendar to Slack Status & Philips Hue</div></td>
+                        <td><span class="category-badge category-productivity">Produtividade</span></td>
+                        <td><div class="description">Sincroniza status do Google Calendar com Slack e controla luzes Philips Hue</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Google Calendar</span>
+                                <span class="integration-tag">Slack</span>
+                                <span class="integration-tag">Philips Hue</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/calendar-slack-hue.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="productivity" data-complexity="low">
+                        <td><span class="workflow-id">PRD003</span></td>
+                        <td><div class="workflow-title">What To Eat Decision Helper</div></td>
+                        <td><span class="category-badge category-productivity">Produtividade</span></td>
+                        <td><div class="description">Ajuda a decidir o que comer baseado em preferências e restrições alimentares</div></td>
+                        <td><span class="complexity complexity-low">Baixa</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Random Generator</span>
+                                <span class="integration-tag">Food API</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/food-decision.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="productivity" data-complexity="medium">
+                        <td><span class="workflow-id">PRD004</span></td>
+                        <td><div class="workflow-title">Meeting Notes Auto-Summary</div></td>
+                        <td><span class="category-badge category-productivity">Produtividade</span></td>
+                        <td><div class="description">Gera automaticamente resumos de reuniões e distribui para participantes</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Zoom</span>
+                                <span class="integration-tag">AI Transcription</span>
+                                <span class="integration-tag">Email</span>
+                                <span class="integration-tag">Google Docs</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/meeting-notes-summary.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="productivity" data-complexity="high">
+                        <td><span class="workflow-id">PRD005</span></td>
+                        <td><div class="workflow-title">Personal Productivity Dashboard</div></td>
+                        <td><span class="category-badge category-productivity">Produtividade</span></td>
+                        <td><div class="description">Dashboard pessoal que agrega dados de múltiplas fontes de produtividade</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Multiple APIs</span>
+                                <span class="integration-tag">Dashboard</span>
+                                <span class="integration-tag">Analytics</span>
+                                <span class="integration-tag">Notifications</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/productivity-dashboard.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Monitoramento -->
+                    <tr data-category="monitoring" data-complexity="medium">
+                        <td><span class="workflow-id">MON001</span></td>
+                        <td><div class="workflow-title">TOTP Code Generation Guide</div></td>
+                        <td><span class="category-badge category-monitoring">Monitoramento</span></td>
+                        <td><div class="description">Guia completo para configuração e geração de códigos TOTP para autenticação de dois fatores</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">TOTP</span>
+                                <span class="integration-tag">2FA</span>
+                                <span class="integration-tag">Authentication</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/totp-guide.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="monitoring" data-complexity="low">
+                        <td><span class="workflow-id">MON002</span></td>
+                        <td><div class="workflow-title">SSL Certificate Checker</div></td>
+                        <td><span class="category-badge category-monitoring">Monitoramento</span></td>
+                        <td><div class="description">Verifica status e validade de certificados SSL de websites</div></td>
+                        <td><span class="complexity complexity-low">Baixa</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">SSL API</span>
+                                <span class="integration-tag">HTTP Request</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/ssl-checker.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="monitoring" data-complexity="medium">
+                        <td><span class="workflow-id">MON003</span></td>
+                        <td><div class="workflow-title">Syncro Alert to OpsGenie</div></td>
+                        <td><span class="category-badge category-monitoring">Monitoramento</span></td>
+                        <td><div class="description">Integra alertas do Syncro com o sistema de gerenciamento de incidentes OpsGenie</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Syncro</span>
+                                <span class="integration-tag">OpsGenie</span>
+                                <span class="integration-tag">Alerts</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/syncro-opsgenie.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="monitoring" data-complexity="high">
+                        <td><span class="workflow-id">MON004</span></td>
+                        <td><div class="workflow-title">Infrastructure Health Monitor</div></td>
+                        <td><span class="category-badge category-monitoring">Monitoramento</span></td>
+                        <td><div class="description">Sistema completo de monitoramento de infraestrutura com alertas inteligentes</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Multiple Monitors</span>
+                                <span class="integration-tag">Alert Systems</span>
+                                <span class="integration-tag">Dashboard</span>
+                                <span class="integration-tag">Analytics</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/infrastructure-monitor.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Análise de Dados -->
+                    <tr data-category="data" data-complexity="high">
+                        <td><span class="workflow-id">DAT001</span></td>
+                        <td><div class="workflow-title">Smart Factory Data Generator</div></td>
+                        <td><span class="category-badge category-data">Dados</span></td>
+                        <td><div class="description">Gera dados simulados para casos de uso de fábrica inteligente e IoT</div></td>
+                        <td><span class="complexity complexity-high">Alta</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">IoT Sensors</span>
+                                <span class="integration-tag">Database</span>
+                                <span class="integration-tag">Analytics</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/smart-factory-data.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="data" data-complexity="medium">
+                        <td><span class="workflow-id">DAT002</span></td>
+                        <td><div class="workflow-title">Steam + CF Report</div></td>
+                        <td><span class="category-badge category-data">Dados</span></td>
+                        <td><div class="description">Gera relatórios combinando dados do Steam com CloudFlare Analytics</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Steam API</span>
+                                <span class="integration-tag">CloudFlare</span>
+                                <span class="integration-tag">Reporting</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a href="https://github.com/Zie619/n8n-workflows/blob/main/workflows/steam-cf-report.json" class="btn btn-primary" target="_blank">📥 Download</a>
+                                <a href="https://github.com/Zie619/n8n-workflows/tree/main/workflows" class="btn btn-secondary" target="_blank">👁️ GitHub</a>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="data" data-complexity="medium">
+                        <td><span class="workflow-id">DAT003</span></td>
+                        <td><div class="workflow-title">Financial Metrics Monthly to Mattermost</div></td>
+                        <td><span class="category-badge category-data">Dados</span></td>
+                        <td><div class="description">Envia métricas financeiras mensais automaticamente para o Mattermost</div></td>
+                        <td><span class="complexity complexity-medium">Média</span></td>
+                        <td>
+                            <div class="integrations">
+                                <span class="integration-tag">Financial APIs</span>
